@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'employee.login_middleware.LoginRequiredMiddleware', #custom middleware to check user is authenticated or not
 ]
 
 ROOT_URLCONF = 'leave_management_system.urls'
@@ -135,3 +136,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'sidd6758harth@gmail.com'
 EMAIL_HOST_PASSWORD = 'rkjg notm zoui cfjl'
+
+#Login/logout redirection
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/dashboard/'

@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+    <title>Login</title>
+{% endblock title %}
+
+{% block cssextra %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+{% endblock cssextra %}
+
+{% block main_content %}
+<div class="login-container">
+    <div class="login-box">
+        <h2>Login</h2>
+
+        {% if form.errors %}
+            <p style="color: red;">Your username and password didn't match. Please try again.</p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+
+            <label for="id_password">Password:</label>
+            {{ form.password }}
+
+            <button type="submit"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;Login</button>
+        </form>
+    </div>
+</div>
+{% endblock main_content %}

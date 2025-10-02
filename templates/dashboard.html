@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Dashboard</title>
+{% endblock %}
+
+{% block main_content %}
+  <div class="dashboard-container">
+    <!-- =========== HEADER =========== -->
+    <header class="dashboard-header">
+      <div>Hi, {{ request.user.first_name|default:request.user.username }}!</div>
+      <div class="header-actions">
+        {% if is_manager %}
+          <button id="choose-delegate-btn" class="btn-primary">Choose Delegate</button>
+        {% endif %}
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn-primary">Logout</button>
+        </form>
+      </div>
+    </header>
+
+    <!-- =========== MAIN PANEL =========== -->
+    <div class="main-panel">
+      <div>
+        <button id="apply-leave" class="btn-primary">Apply</button>
+        <button id="leave-status-history">Status/History</button>
+      </div>
+
+      <!-- Leave Balance Cards -->
+      <div class="leave-balances" style="margin-top: 1rem;">
+        <div>
+          <p>Sick</p>
+          <h3>{{ leave_balance.sick|default:'0' }}</h3>
+        </div>
+        <div>
+          <p>Casual</p>
+          <h3>{{ leave_balance.casual|default:'0' }}</h3>
+        </div>
+        <div>
+          <p>Earned</p>
+          <h3>{{ leave_balance.earned|default:'0' }}</h3>
+        </div>
+      </div>
+
+      <!-- =========== Manager and Delegate =========== -->
+      <div class="manager-section">
+        {% if is_manager %}
+          <!-- Manager's View of Pending Requests -->
+          <div class="leave-requests-header">
+            <h4>Leave Requests</h4>
+            <button id="download-report" class="btn-primary">Download Report</button>
+          </div>
+          <div>
+            <!-- This part should be looped with actual data from your view -->
+            {% for leave_request in pending_leave_requests %}
+              <div class="leave-request-item">
+                <span><strong>Name:</strong> {{ leave_request.employee.username }} <strong>From:</strong> {{ leave_request.start_date }} <strong>To:</strong> {{ leave_request.end_date }}</span>
+                <div class="approval-buttons">
+                  <button class="approve-btn" data-id="{{leave_request.id}}"><i class="fa-solid fa-circle-check"></i></button>
+                  <button class="reject-btn" data-id="{{leave_request.id}}"><i class="fa-solid fa-circle-xmark"></i></button>
+                </div>
+              </div>
+            {% empty %}
+              <p>No pending requests.</p>
+            {% endfor %}
+          </div>
+        {% elif is_delegated_manager %}
+          <!-- Delegate's View of Pending Requests -->
+          <div class="leave-requests-header">
+            <h4>Delegated Leave Requests</h4>
+          </div>
+          <div>
+            {% for delegated_leave in delegated_requests %}
+              <div class="leave-request-item">
+                <span>{{ delegated_leave.employee.username }} - {{ delegated_leave.start_date }} to {{ delegated_leave.end_date }}</span>
+                <div class="approval-buttons">
+                  <button class="approve-btn"><i class="fa-solid fa-circle-check"></i></button>
+                  <button class="reject-btn"><i class="fa-solid fa-circle-xmark"></i></button>
+                </div>
+              </div>
+            {% empty %}
+              <p>No delegated requests to approve.</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
