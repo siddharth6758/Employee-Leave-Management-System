@@ -12,7 +12,7 @@
       <div>Hi, {{ request.user.first_name|default:request.user.username }}!</div>
       <div class="header-actions">
         {% if is_manager %}
-          <button id="choose-delegate-btn" class="btn-primary">Choose Delegate</button>
+          <button id="choose-delegate-btn" class="btn-primary"><a href="{% url 'delegate_apply' %}">Choose Delegate</a></button>
         {% endif %}
         <form method="post" action="{% url 'logout' %}" style="display:inline;">
           {% csrf_token %}
@@ -24,8 +24,8 @@
     <!-- =========== MAIN PANEL =========== -->
     <div class="main-panel">
       <div>
-        <button id="apply-leave" class="btn-primary">Apply</button>
-        <button id="leave-status-history">Status/History</button>
+        <button id="apply-leave" class="btn-primary"><a href="{% url 'apply_leave_request' %}">Apply</a></button>
+        <button id="leave-status-history"> <a href="{% url 'leave_status' %}">Status/History</a></button>
       </div>
 
       <!-- Leave Balance Cards -->
@@ -50,7 +50,7 @@
           <!-- Manager's View of Pending Requests -->
           <div class="leave-requests-header">
             <h4>Leave Requests</h4>
-            <button id="download-report" class="btn-primary">Download Report</button>
+            <button id="download-report" class="btn-primary"><a href="{% url 'leave_report' %}">Leave Report</a></button>
           </div>
           <div>
             <!-- This part should be looped with actual data from your view -->

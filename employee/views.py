@@ -1,7 +1,8 @@
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from employee.models import Employee, Delegation
+from employee.models import  Delegation
+from employee.forms import DelegationForm
 from leaves.models import LeaveBalance, LeaveRequest, LEAVE_TYPES
 
 #employee1 - emp@1234
@@ -46,3 +47,22 @@ def dashboard(request):
         )
         context["pending_leave_requests"] = pending_leave_requests
     return render(request, "dashboard.html", context=context)
+
+@login_required(login_url='login')
+def apply_delegate_handler(request):
+    if request.method == 'POST':
+
+        form = DelegationForm(request.POST)
+        if form.is_valid():
+            delegration_request = form.save(commit=False)
+            delegration_request.manager = request.user
+            try:
+                delegration_request.save()
+            except Exception as e:
+                form.add_error(None, e.message)
+                return render(request,'delegation.html', {'form':form})
+            return redirect('employee_dashboard')
+        return render(request,'delegation.html', {'form':form})
+    else:
+        form = DelegationForm(manager=request.user)
+        return render(request,'delegation.html', {'form':form})

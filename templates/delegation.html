@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Apply Delegation</title>
+{% endblock title %}
+
+
+{% block main_content %}
+<div class="form-container">
+  <div class="form-header">
+    <h2>Apply for Delegation</h2>
+  </div>
+
+  <form method="post">
+    {% csrf_token %}
+    <table>
+      {{ form.as_table }}
+    </table>
+    <!-- Form Buttons -->
+    <div style="margin-top: 20px;">
+      <button type="submit" class="btn">Submit Delegation</button>
+      <a href="{% url 'employee_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock main_content %}

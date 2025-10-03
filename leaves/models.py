@@ -43,31 +43,46 @@ class LeaveRequest(TimeStampedModel):
         verbose_name_plural = 'Leave Requests'
 
     def save(self, *args, **kwargs):
+        old_instance = None
         old_status = None
+        requested_days = (self.end_date - self.start_date).days + 1
         # get old instance of leaverequest object
-        if self.pk:
-            old_instance = LeaveRequest.objects.get(pk=self.pk)
-            old_status = old_instance.status
+        with transaction.atomic():
+            if not self.pk:
+                if self.status in ["pending", "approved"]:
+                    try:
+                        balance = LeaveBalance.objects.get(
+                            employee=self.employee,
+                            leave_type=self.leave_type
+                        )
+                    except LeaveBalance.DoesNotExist:
+                        raise ValidationError(f"No leave balance found for {self.leave_type} leave for user {self.employee.username}")
+                    if balance.balance < requested_days:
+                        raise ValidationError(f"Insufficient {self.leave_type} leave balance.")
+                    balance.balance -= requested_days
+                    balance.save()
+            else:
+                old_instance = LeaveRequest.objects.get(pk=self.pk)
+                old_status = old_instance.status
 
-        # check if the status is changed to approved
-        status_changed_to_approved = self.status == 'approved' and old_status != 'approved'
-
-        if status_changed_to_approved:
-            with transaction.atomic():
                 try:
-                    # update the leave balance
                     balance = LeaveBalance.objects.select_for_update().get(
                         employee=self.employee,
                         leave_type=self.leave_type
                     )
-
-                    requested_days = (self.end_date - self.start_date).days + 1
-
-                    if balance.balance >= requested_days:
-                        balance.balance -= Decimal(requested_days)
-                        balance.save()
-                    else:
-                        raise ValidationError(f"{requested_days} does not meet the available balance of {balance.balance}")
-
                 except LeaveBalance.DoesNotExist:
                     raise ValidationError(f"No leave balance found for {self.leave_type} leave for user {self.employee.username}")
+                if self.status == "rejected" and old_status != "rejected":
+                    # if the status is changed to rejected then add back the balance
+                    try:
+                        balance.balance += requested_days
+                        balance.save()
+                    except LeaveBalance.DoesNotExist:
+                        raise ValidationError(f"No leave balance found for {self.leave_type} leave for user {self.employee.username}")
+                elif self.status in ["pending", "approved"] and old_status == "rejected":
+                    #if the status is changed from rejected to pending or approved then deduct the balance
+                    if balance.balance < requested_days:
+                        raise ValidationError(f"Insufficient {self.leave_type} leave balance.")
+                    balance.balance -= requested_days
+                    balance.save()
+        super().save(*args, **kwargs)
