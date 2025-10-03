@@ -1,5 +1,7 @@
-from django.db import models
+from decimal import Decimal
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
+from django.db import models, transaction
 from model_utils.models import TimeStampedModel
 
 LEAVE_TYPES = (
@@ -42,15 +44,18 @@ class LeaveRequest(TimeStampedModel):
 
     def save(self, *args, **kwargs):
         old_status = None
+        # get old instance of leaverequest object
         if self.pk:
             old_instance = LeaveRequest.objects.get(pk=self.pk)
             old_status = old_instance.status
 
+        # check if the status is changed to approved
         status_changed_to_approved = self.status == 'approved' and old_status != 'approved'
 
         if status_changed_to_approved:
             with transaction.atomic():
                 try:
+                    # update the leave balance
                     balance = LeaveBalance.objects.select_for_update().get(
                         employee=self.employee,
                         leave_type=self.leave_type
@@ -62,9 +67,7 @@ class LeaveRequest(TimeStampedModel):
                         balance.balance -= Decimal(requested_days)
                         balance.save()
                     else:
-                        self.status = 'rejected'
-                        super().save(*args, **kwargs)
+                        raise ValidationError(f"{requested_days} does not meet the available balance of {balance.balance}")
 
                 except LeaveBalance.DoesNotExist:
-                    self.status = 'rejected'
-                    super().save(*args, **kwargs)
+                    raise ValidationError(f"No leave balance found for {self.leave_type} leave for user {self.employee.username}")
