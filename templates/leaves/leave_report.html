@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Leave Report</title>
+{% endblock title %}
+
+
+{% block main_content %}
+<div class="report-container">
+  <div class="report-header">
+    <div class="filter-controls">
+      <label for="filter-type">Filter by:</label>
+      <select id="filter-type" class="filter-select" onchange="window.location.href = '?filter-type=' + this.value;">
+        <option value="all" {% if not department_filter %}selected{% endif %}>All Requests</option>
+        <option value="department-wise" {% if department_filter %}selected{% endif %}>Department-wise</option>
+      </select>
+    </div>
+    <div>
+      <button class="download-btn" id="report-download-btn">Download CSV</button>
+    </div>
+  </div>
+
+  {% if department_filter %}
+    <!-- DEPARTMENT-WISE VIEW -->
+    {% for department_name, leaves in leave_history.items %}
+      <section class="department-section">
+        <h3 class="department-title">{{ department_name }}</h3>
+        <div class="leave-list">
+          {% for leave in leaves %}
+            <div class="leave-item">
+              <span><strong>Employee:</strong> {{ leave.employee.username }}</span>
+              <span><strong>From:</strong> {{ leave.start_date|date:"d M, Y" }}</span>
+              <span><strong>To:</strong> {{ leave.end_date|date:"d M, Y" }}</span>
+              <span><strong>Type:</strong> {{ leave.get_leave_type_display }}</span>
+              {% if leave.status != 'pending' %}
+              <span><strong>By:</strong> {{ leave.approved_rejected_by }}</span>
+              <span><strong>At:</strong> {{ leave.approved_rejected_at }}</span>
+              {% endif %}
+              <span class="status-badge status-{{ leave.status }}">{{ leave.get_status_display }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% empty %}
+      <p>No leave history found.</p>
+    {% endfor %}
+  {% else %}
+    <section class="department-section">
+      <div class="leave-list">
+        {% for leave in leave_history %}
+          <div class="leave-item">
+            <span><strong>Employee:</strong> {{ leave.employee.username }}</span>
+            <span><strong>From:</strong> {{ leave.start_date|date:"d M, Y" }}</span>
+            <span><strong>To:</strong> {{ leave.end_date|date:"d M, Y" }}</span>
+            <span><strong>Type:</strong> {{ leave.get_leave_type_display }}</span>
+            {% if leave.status != 'pending' %}
+              <span><strong>By:</strong> {{ leave.approved_rejected_by }}</span>
+              <span><strong>At:</strong> {{ leave.approved_rejected_at }}</span>
+              {% endif %}
+            <span class="status-badge status-{{ leave.status }}">{{ leave.get_status_display }}</span>
+          </div>
+        {% empty %}
+          <p>No leave history found.</p>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+</div>
+{% endblock main_content %}

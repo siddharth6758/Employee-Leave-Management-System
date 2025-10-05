@@ -33,6 +33,8 @@ class LeaveRequest(TimeStampedModel):
     start_date = models.DateField()
     end_date = models.DateField()
     reason = models.TextField()
+    approved_rejected_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='approved_rejected_leaves')
+    approved_rejected_at = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
 
     def __str__(self):
@@ -86,3 +88,22 @@ class LeaveRequest(TimeStampedModel):
                     balance.balance -= requested_days
                     balance.save()
         super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if self.status in ['approved', 'pending']:
+            with transaction.atomic():
+                try:
+                    # lock the LeaveBalance row to prevent race conditions/deadlocks
+                    balance = LeaveBalance.objects.select_for_update().get(
+                        employee=self.employee,
+                        leave_type=self.leave_type
+                    )
+                    leave_days = (self.end_date - self.start_date).days + 1
+                    # add the days back to the balance
+                    balance.balance += Decimal(leave_days)
+                    balance.save()
+                except LeaveBalance.DoesNotExist:
+                    pass
+                super().delete(*args, **kwargs)
+        else:
+            super().delete(*args, **kwargs)

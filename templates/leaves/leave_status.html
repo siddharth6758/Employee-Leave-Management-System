@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}
+<title>Leave Status/History</title>
+{% endblock title %}
+
+
+{% block main_content %}
+<div class="history-container">
+  <div class="history-header">
+    <h1>Your Leave History</h1>
+  </div>
+
+  {% for leave in leave_request_history %}
+    <div class="leave-card">
+      <div class="leave-details">
+        <div><strong>From:</strong> {{ leave.start_date|date:"d M, Y" }}</div>
+        <div><strong>To:</strong> {{ leave.end_date|date:"d M, Y" }}</div>
+        <div><strong>Type:</strong> {{ leave.get_leave_type_display }}</div>
+        {% if leave.status != "pending" %}
+        <div><strong>By:</strong> {{ leave.approved_rejected_by }}</div>
+        <div><strong>At:</strong> {{ leave.approved_rejected_at }}</div>
+        {% endif %}
+      </div>
+      <div class="leave-status status-{{ leave.status }}">
+        {{ leave.get_status_display }}
+      </div>
+    </div>
+  {% empty %}
+    <div class="leave-card" style="justify-content: center;">
+      <p>You have not applied for any leaves yet.</p>
+    </div>
+  {% endfor %}
+</div>
+{% endblock main_content %}

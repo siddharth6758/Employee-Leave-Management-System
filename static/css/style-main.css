@@ -1,110 +1,110 @@
 /* static/css/dashboard.css */
 
 body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: #f7f9fc;
-    color: #333;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f7f9fc;
+  color: #333;
 }
 
-a{
-    color:inherit;
-    text-decoration: none;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 .dashboard-container {
-    max-width: 1100px;
-    margin: 20px auto;
-    padding: 0 20px;
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 20px;
 }
 
 /* --- Header --- */
 .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    font-size: 1.2rem;
-    font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-size: 1.2rem;
+  font-weight: 600;
 }
 
-.btn-primary{
-    background-color: #007bff;
-    border: none;
-    color: white;
-    padding: 10px 16px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 6px;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-left: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .btn-primary:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
 /* --- Main Panel & Action Buttons --- */
 .main-panel {
-    margin-top: 25px;
-    background-color: white;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 25px;
+  background-color: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-.main-panel > div:first-child button {
-    background-color: #6c757d;
-    border: none;
-    color: white;
-    padding: 10px 18px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 6px;
-    margin-right: 10px;
-    transition: background-color 0.3s ease;
+.main-panel>div:first-child button {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.main-panel > div:first-child button:hover {
-    background-color: #5a6268;
+.main-panel>div:first-child button:hover {
+  background-color: #5a6268;
 }
 
 /* --- Leave Balance Cards --- */
 .leave-balances {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
 }
 
 .leave-balances div {
-    border: 1px solid #e9ecef;
-    background: #f8f9fa;
-    padding: 20px;
-    flex: 1;
-    text-align: center;
-    border-radius: 8px;
-    font-weight: 700;
-    transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #e9ecef;
+  background: #f8f9fa;
+  padding: 20px;
+  flex: 1;
+  text-align: center;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .leave-balances div:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .leave-balances p {
-    margin: 0;
-    font-size: 1rem;
-    color: #555;
+  margin: 0;
+  font-size: 1rem;
+  color: #555;
 }
 
 .leave-balances h3 {
-    margin: 10px 0 0;
-    font-size: 2.5rem;
-    color: #007bff;
+  margin: 10px 0 0;
+  font-size: 2.5rem;
+  color: #007bff;
 }
 
 .form-control {
@@ -141,81 +141,86 @@ a{
 
 /* --- Manager & Delegate Section --- */
 .manager-section {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #e9ecef;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e9ecef;
 }
 
 .leave-requests-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .leave-requests-header h4 {
-    margin: 0;
-    font-size: 1.5rem;
-    color: #333;
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
 }
 
 .leave-requests-header button {
-    background-color: #28a745;
+  background-color: #28a745;
 }
+
 .leave-requests-header button:hover {
-    background-color: #218838;
+  background-color: #218838;
 }
 
 .leave-request-item {
-    padding: 15px 20px;
-    margin-bottom: 12px;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-left: 5px solid #007bff;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-left: 5px solid #007bff;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .leave-request-item span {
-    font-weight: 500;
-    font-size: 1rem;
+  font-weight: 500;
+  font-size: 1rem;
 }
 
 .approval-buttons button {
-    border: none;
-    color: white;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1rem;
-    margin-left: 8px;
-    line-height: 35px;
-    transition: filter 0.2s;
+  border: none;
+  color: white;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 8px;
+  line-height: 35px;
+  transition: filter 0.2s;
 }
 
 .approval-buttons button.approve-btn {
-    background-color: #28a745;
+  background-color: #28a745;
 }
+
 .approval-buttons button.reject-btn {
-    background-color: #dc3545;
+  background-color: #dc3545;
 }
 
 .approval-buttons button:hover {
-    filter: brightness(1.1);
+  filter: brightness(1.1);
 }
 
 /* --- Responsive Design --- */
 @media (max-width: 768px) {
-    .dashboard-header, .main-panel {
-        flex-direction: column;
-        gap: 15px;
-    }
-    .leave-balances {
-        flex-direction: column;
-    }
+
+  .dashboard-header,
+  .main-panel {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .leave-balances {
+    flex-direction: column;
+  }
 }
 
 .form-container {
@@ -237,7 +242,8 @@ table {
   width: 100%;
 }
 
-table th, table td {
+table th,
+table td {
   padding: 10px;
   text-align: left;
   vertical-align: top;
@@ -295,4 +301,240 @@ table th {
   margin: 5px 0 0 0;
   color: #dc3545;
   font-size: 14px;
+}
+
+.modal {
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 9999;
+  /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Dim background */
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 25px;
+  border: 1px solid #ddd;
+  width: 80%;
+  max-width: 450px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: #007bff;
+}
+
+.modal-close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+  color: #333;
+  text-decoration: none;
+}
+
+.modal-body p {
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.modal-body blockquote {
+  background: #f1f3f5;
+  border-left: 5px solid #007bff;
+  margin: 0;
+  padding: 15px;
+  font-style: italic;
+  white-space: pre-wrap;
+  /* Preserves line breaks in the reason */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.history-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.history-header {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.leave-card {
+  background-color: white;
+  padding: 20px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.leave-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.leave-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 80%;
+  font-size: 1rem;
+  color: #555;
+}
+
+.leave-details strong {
+  color: #333;
+}
+
+.leave-status {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: white;
+  min-width: 100px;
+  text-align: center;
+}
+
+.status-pending {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.status-approved {
+  background-color: #28a745;
+}
+
+.status-rejected {
+  background-color: #dc3545;
+}
+
+.report-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.filter-controls label {
+  font-weight: 600;
+  color: #555;
+  margin-right: 10px;
+}
+
+.filter-select {
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-weight: 600;
+  background-color: white;
+  cursor: pointer;
+}
+
+.download-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+}
+
+.department-section {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 25px;
+  overflow: hidden;
+  /* Ensures child borders don't spill out */
+}
+
+.department-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  color: #333;
+}
+
+.leave-list {
+  padding: 10px 20px;
+}
+
+.leave-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  gap: 15px;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #f1f3f5;
+}
+
+.leave-list .leave-item:last-child {
+  border-bottom: none;
+}
+
+.leave-item span {
+  font-size: 0.95rem;
+  color: #495057;
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-weight: 600;
+  text-align: center;
+  color: white;
 }

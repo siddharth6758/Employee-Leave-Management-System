@@ -12,7 +12,7 @@
       <div>Hi, {{ request.user.first_name|default:request.user.username }}!</div>
       <div class="header-actions">
         {% if is_manager %}
-          <button id="choose-delegate-btn" class="btn-primary"><a href="{% url 'delegate_apply' %}">Choose Delegate</a></button>
+          <a href="{% url 'delegate_apply' %}"><button id="choose-delegate-btn" class="btn-primary">Choose Delegate</button></a>
         {% endif %}
         <form method="post" action="{% url 'logout' %}" style="display:inline;">
           {% csrf_token %}
@@ -24,8 +24,8 @@
     <!-- =========== MAIN PANEL =========== -->
     <div class="main-panel">
       <div>
-        <button id="apply-leave" class="btn-primary"><a href="{% url 'apply_leave_request' %}">Apply</a></button>
-        <button id="leave-status-history"> <a href="{% url 'leave_status' %}">Status/History</a></button>
+        <a href="{% url 'apply_leave_request' %}"><button id="apply-leave" class="btn-primary">Apply</button></a>
+        <a href="{% url 'leave_status' %}"><button id="leave-status-history"> Status/History</button></a>
       </div>
 
       <!-- Leave Balance Cards -->
@@ -50,12 +50,20 @@
           <!-- Manager's View of Pending Requests -->
           <div class="leave-requests-header">
             <h4>Leave Requests</h4>
-            <button id="download-report" class="btn-primary"><a href="{% url 'leave_report' %}">Leave Report</a></button>
+            <a href="{% url 'leave_report' %}"><button id="download-report" class="btn-primary">Leave Report</button></a>
           </div>
           <div>
             <!-- This part should be looped with actual data from your view -->
             {% for leave_request in pending_leave_requests %}
-              <div class="leave-request-item">
+              <div class="leave-request-item"
+                id="leave-request-{{ leave_request.id }}"
+                data-id="{{ leave_request.id }}"
+                data-employee="{{ leave_request.employee.get_full_name|default:leave_request.employee.username }}"
+                data-type="{{ leave_request.get_leave_type_display }}"
+                data-start="{{ leave_request.start_date|date:'Y-m-d' }}"
+                data-end="{{ leave_request.end_date|date:'Y-m-d' }}"
+                data-reason="{{ leave_request.reason }}"
+                style="cursor: pointer;">
                 <span><strong>Name:</strong> {{ leave_request.employee.username }} <strong>From:</strong> {{ leave_request.start_date }} <strong>To:</strong> {{ leave_request.end_date }}</span>
                 <div class="approval-buttons">
                   <button class="approve-btn" data-id="{{leave_request.id}}"><i class="fa-solid fa-circle-check"></i></button>
@@ -73,11 +81,19 @@
           </div>
           <div>
             {% for delegated_leave in delegated_requests %}
-              <div class="leave-request-item">
+              <div class="leave-request-item"
+                id="leave-request-{{ delegated_leave.id }}"
+                data-id="{{ delegated_leave.id }}"
+                data-employee="{{ delegated_leave.employee.get_full_name|default:delegated_leave.employee.username }}"
+                data-type="{{ delegated_leave.get_leave_type_display }}"
+                data-start="{{ delegated_leave.start_date|date:'Y-m-d' }}"
+                data-end="{{ delegated_leave.end_date|date:'Y-m-d' }}"
+                data-reason="{{ delegated_leave.reason }}"
+                style="cursor: pointer;">
                 <span>{{ delegated_leave.employee.username }} - {{ delegated_leave.start_date }} to {{ delegated_leave.end_date }}</span>
                 <div class="approval-buttons">
-                  <button class="approve-btn"><i class="fa-solid fa-circle-check"></i></button>
-                  <button class="reject-btn"><i class="fa-solid fa-circle-xmark"></i></button>
+                  <button class="approve-btn" data-id="{{delegated_leave.id}}"><i class="fa-solid fa-circle-check"></i></button>
+                  <button class="reject-btn" data-id="{{delegated_leave.id}}"><i class="fa-solid fa-circle-xmark"></i></button>
                 </div>
               </div>
             {% empty %}
