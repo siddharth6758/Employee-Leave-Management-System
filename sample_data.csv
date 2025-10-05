@@ -1,0 +1,6 @@
+username,email,password,is_manager,manager,department,sick_leave,casual_leave,earned_leave
+john_doe,john@example.com,john123,TRUE,,sales,10,5,2
+jane_smith,jane@example.com,jane123,FALSE,john_doe,sales,5,3,1
+alice_wong,alice@example.com,alice123,TRUE,,engineering,8,5,3
+bob_jones,bob@example.com,bob123,FALSE,alice_wong,engineering,6,4,2
+charlie_kim,charlie@example.com,charlie123,FALSE,john_doe,marketing,7,4,1
